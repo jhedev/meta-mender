@@ -20,6 +20,7 @@ SRC_URI_append = " file://0002-Integration-of-Mender-boot-code-into-U-Boot.patch
 ################################################################################
 # Board specific patches
 ################################################################################
+SRC_URI_append_olinuxino-a20lime = " file://0001-olinuxino-a20lime-Use-Mender.patch"
 SRC_URI_append_beaglebone = " file://0001-BBB-Use-Mender-boot-code-for-selecting-boot-device-a.patch"
 
 SRC_URI_append_vexpress-qemu = " file://0001-Enable-U-Boot-on-QEMU-to-use-Mender-boot-code.patch \
