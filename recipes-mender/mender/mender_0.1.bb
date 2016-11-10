@@ -57,6 +57,8 @@ do_compile() {
   cd ${B}/src/${GO_IMPORT}
 
   # run verbose build, we should see which dependencies are pulled in
+  export CGO_CFLAGS="-march=armv7-a -mfloat-abi=softfp -mfpu=neon --sysroot=/home/ubuntu/resin-olimex/build/tmp/sysroots/olinuxino-a20lime -I${PKG_CONFIG_SYSROOT_DIR}/usr/include"
+  export CGO_LDFLAGS="-march=armv7-a -mfloat-abi=softfp -mfpu=neon --sysroot=/home/ubuntu/resin-olimex/build/tmp/sysroots/olinuxino-a20lime -L${PKG_CONFIG_SYSROOT_DIR}/usr/lib -L${PKG_CONFIG_SYSROOT_DIR}/lib"
   oe_runmake V=1 install
 
   #prepare Mender configuration file
