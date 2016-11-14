@@ -12,7 +12,7 @@ B = "${WORKDIR}/build"
 
 inherit go
 
-SRC_URI = "git://github.com/mendersoftware/mender;protocol=https \
+SRC_URI = "git://github.com/mendersoftware/mender;branch=stable;protocol=https \
            file://mender.service \
            file://mender.conf \
            file://server.crt \
@@ -25,6 +25,7 @@ PV = "${PVBASE}+git${SRCPV}"
 # DO NOT change the checksum here without make sure that ALL licenses (including
 # dependencies) are included in the LICENSE variable below.
 LIC_FILES_CHKSUM = "file://LIC_FILES_CHKSUM.sha256;md5=5d7dda2920f25253c9a3af5c28b10fb2"
+#LIC_FILES_CHKSUM = "file://LIC_FILES_CHKSUM.sha256;md5=3c0d762066584be3a991139379d94978"
 LICENSE = "Apache-2.0 & BSD-2-Clause & BSD-3-Clause & MIT & OLDAP-2.8"
 
 inherit systemd
@@ -57,6 +58,8 @@ do_compile() {
   cd ${B}/src/${GO_IMPORT}
 
   # run verbose build, we should see which dependencies are pulled in
+  export CGO_CFLAGS="-march=armv7-a -mfloat-abi=softfp -mfpu=neon --sysroot=${PKG_CONFIG_SYSROOT_DIR} -I${PKG_CONFIG_SYSROOT_DIR}/usr/include"
+  export CGO_LDFLAGS="-march=armv7-a -mfloat-abi=softfp -mfpu=neon --sysroot=${PKG_CONFIG_SYSROOT_DIR} -L${PKG_CONFIG_SYSROOT_DIR}/usr/lib -L${PKG_CONFIG_SYSROOT_DIR}/lib"
   oe_runmake V=1 install
 
   #prepare Mender configuration file
